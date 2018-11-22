@@ -1,0 +1,17 @@
+.img-cont{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .ic{
+    height: 150px;
+  }
+}
+#bg{
+  position: absolute;
+  background: url('../../assets/imgs/BG.svg') bottom no-repeat;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+}
