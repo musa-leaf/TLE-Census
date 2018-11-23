@@ -14,43 +14,86 @@
 
 
 <ion-content padding>
-
+  
+  <ion-card>
+    <ion-list-header>
+      number of persons
+      <ion-badge item-end>{{numberOfPeople}} <span *ngIf = "numberOfPeople == 1">person</span>  <span *ngIf = "numberOfPeople > 1">People</span> </ion-badge>
+      <ion-icon item-end name="person"></ion-icon>
+    </ion-list-header>
+    <ion-item>
+      <ion-range min="0" max="50" pin="true" [(ngModel)]="numberOfPeople"  (ionChange)= "updateResults();">
+        <ion-label range-left>0</ion-label>
+        <ion-label range-right>50</ion-label>
+      </ion-range>
+    </ion-item>
+  </ion-card>
+  
+  <!--dynamic forms-->
+  <ion-card class =  "fields" *ngFor = "let item of forms; let i = index">
     <ion-item-group>
-      <ion-item-divider color="light">A</ion-item-divider>
-      <ion-item>Angola</ion-item>
-      <ion-item>Argentina</ion-item>
+      <ion-item-divider color="secondary">Profile of person {{i + 1}}</ion-item-divider>
     </ion-item-group>
+    <ion-list radio-group [(ngModel)]="gender">
+      <ion-item>
+        <ion-label>Male</ion-label>
+        <ion-radio value="male" checked></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>Female</ion-label>
+        <ion-radio value="female"></ion-radio>
+      </ion-item>
+    </ion-list>
+    <ion-list>
+      <ion-item>
+        <ion-label>Race</ion-label>
+        <ion-select [(ngModel)]="ethnic_group">
+          <ion-option value="African">African</ion-option>
+          <ion-option value="Coloured">Coloured</ion-option>
+          <ion-option value="White">White</ion-option>
+          <ion-option value="Indian">Indian</ion-option>
+          <ion-option value="Other">Other</ion-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+    <ion-list>
+      <ion-item>
+        <ion-label>Age Group</ion-label>
+        <ion-select [(ngModel)]="age_group">
+          <ion-option value="under 12">Under 12 years old</ion-option>
+          <ion-option value="12-17">12-17 years old</ion-option>
+          <ion-option value="18-24">18-24 years old</ion-option>
+          <ion-option value="25-34">25-34 years old</ion-option>
+          <ion-option value="35-44">35-44 years old</ion-option>
+          <ion-option value="45-54">45-54 years old</ion-option>
+          <ion-option value="55-64">55-64 years old</ion-option>
+          <ion-option value="65-74">65-74 years old</ion-option>
+          <ion-option value="75 and above">75 years or older</ion-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+    <ion-list>
+      <ion-item>
+        <ion-label>Occupation</ion-label>
+        <ion-select [(ngModel)]="occupation">
+          <ion-option value="vendor">vendor</ion-option>
+          <ion-option value="begger">begger</ion-option>
+          <ion-option value="promoters">promoters</ion-option>
+          <ion-option value="job seeker">job seeker</ion-option>
+          <ion-option value="windshield cleaner">windshield cleaner</ion-option>
+          <ion-option value="other">other</ion-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
 
-  <ion-item>
-    <ion-range [(ngModel)]="brightness">
-      <ion-icon range-left small name="sunny"></ion-icon>
-      <ion-icon range-right name="sunny"></ion-icon>
-    </ion-range>
-  </ion-item>
-  <ion-list>
+    <ion-row>
+      <ion-col col-8>
 
-    <ion-item>
-      <ion-label fixed>Username</ion-label>
-      <ion-input type="text" value=""></ion-input>
-    </ion-item>
-  
-    <ion-item>
-      <ion-label fixed>Password</ion-label>
-      <ion-input type="password"></ion-input>
-    </ion-item>
-  
-  </ion-list>
-  <ion-list>
-    <ion-item>
-      <ion-label>Gaming</ion-label>
-      <ion-select [(ngModel)]="gaming">
-        <ion-option value="nes">NES</ion-option>
-        <ion-option value="n64">Nintendo64</ion-option>
-        <ion-option value="ps">PlayStation</ion-option>
-        <ion-option value="genesis">Sega Genesis</ion-option>
-        <ion-option value="saturn">Sega Saturn</ion-option>
-        <ion-option value="snes">SNES</ion-option>
-      </ion-select>
-    </ion-item>
-  </ion-list>
+      </ion-col>
+      <ion-col col-4>
+        <button ion-button full (click) = "save(i);">save</button>
+      </ion-col>
+    </ion-row>
+  </ion-card>
+
 </ion-content>
