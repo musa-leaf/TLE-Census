@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { AlertController } from 'ionic-angular';
+
 
 @IonicPage()
 @Component({
@@ -8,39 +10,81 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class FormPage {
 
-  numberOfPeople : number = 0;
+
   age_group;
   occupation;
   gender;
   ethnic_group;
-  forms : any = [];
+  location;
+  date;
+  time;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  people = [];
 
-    console.log(this.forms.length);
-    
+  
+  constructor(public alertCtrl: AlertController, public navCtrl: NavController, public navParams: NavParams) {    
+
   }
 
-  updateResults(){
-    this.forms.length = this.numberOfPeople;        
+  save(){
+    this.saveToArray();
+    this.showConfirm();
   }
 
-  save(i){
+  showConfirm() {
+    const confirm = this.alertCtrl.create({
+      title: 'Add new data',
+      message: 'Do you agree to use this lightsaber to do good across the intergalactic galaxy?',
+      buttons: [
+        {
+          text: 'Discard',
+          handler: () => {
+            console.log('Disagree clicked');
+            this.navCtrl.pop();
+          }
+        },
+        {
+          text: 'Add more',
+          handler: () => {
+            console.log('Agree clicked');
+            this.clearForm();
+            
+          }
+        }
+      ]
+    });
+    confirm.present();
+  }
+
+  saveToArray(){
+    this.people.push(
+      {
+        age : this.age_group,
+        occupation : this.occupation,
+        gender: this.gender,
+        ethnicity : this.ethnic_group,
+        location : this.location,
+        date : this.date,
+        time: this.time
+      }
+    );
+
+    console.table(this.people);
+  }
+
+  clearForm(){
+    this.age_group ="";
+    this.occupation  ="";
+    this.gender  ="";
+    this.ethnic_group  ="";
+  }
+
+  remove(i){
     console.log(i);
-    this.forms[i] = {
-      location : "25.555,26.333",
-      ethnic_group : this.ethnic_group,
-      age_group : this.age_group,
-      occupation : this.occupation,
-      gender : this.gender
-    };
-
-    console.table(this.forms);
+    this.people.splice(i,1);
     
-  }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad FormPage');
   }
 
 }
+
+
