@@ -1,3 +1,38 @@
-page-form {
+#custom{
+  height: 56px;
+  background: url('../../assets/imgs/Untitled-1.svg') no-repeat top;
+  background-size: cover;
+}
 
+
+
+.fields{
+  animation: .25s pulse ease-in-out;
+}
+
+#bg{
+
+  /*
+  position: fixed;
+  background: url('../../assets/imgs/BG.svg') bottom no-repeat;
+  width: 100vw;
+  background-size: 100%;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: -66666;
+  */
+}
+
+@keyframes pulse{
+  0%{
+    opacity: .5;
+    transform: scale(.5);
+  }
+  80%{
+    transform: scale(1);
+    opacity: 1;
+
+  }
 }
