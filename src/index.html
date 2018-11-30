@@ -46,7 +46,19 @@
 
   <!-- The main bundle js is generated during the build process -->
   <script src="build/main.js"></script>
-  
+  <script src="https://www.gstatic.com/firebasejs/5.5.9/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyA_pzJ7HSm7PVlySiIApoaO7miznEX_woo",
+    authDomain: "tlc-database.firebaseapp.com",
+    databaseURL: "https://tlc-database.firebaseio.com",
+    projectId: "tlc-database",
+    storageBucket: "tlc-database.appspot.com",
+    messagingSenderId: "309257296351"
+  };
+  firebase.initializeApp(config);
+</script>
 
 
   

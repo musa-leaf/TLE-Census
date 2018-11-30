@@ -1,7 +1,7 @@
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>form</ion-title>
+  <ion-navbar text-center>
+    <ion-title>Data Capture</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -15,17 +15,17 @@
       </ion-item-group>
       <ion-list radio-group [(ngModel)]="gender">
         <ion-item>
-          <ion-label>Male</ion-label>
+          <ion-label style="font-weight:lighter">Male</ion-label>
           <ion-radio value="male" checked></ion-radio>
         </ion-item>
         <ion-item>
-          <ion-label>Female</ion-label>
+          <ion-label  style="font-weight:lighter">Female</ion-label>
           <ion-radio value="female"></ion-radio>
         </ion-item>
       </ion-list>
       <ion-list>
         <ion-item>
-          <ion-label>Race</ion-label>
+          <ion-label style="color:black;font-weight: lighter">Race</ion-label>
           <ion-select [(ngModel)]="ethnic_group">
             <ion-option value="African">African</ion-option>
             <ion-option value="Coloured">Coloured</ion-option>
@@ -37,7 +37,7 @@
       </ion-list>
       <ion-list>
         <ion-item>
-          <ion-label>Age Group</ion-label>
+          <ion-label style="color:black;font-weight: lighter">Age Group</ion-label>
           <ion-select [(ngModel)]="age_group">
             <ion-option value="under 12">Under 12 years old</ion-option>
             <ion-option value="12-17">12-17 years old</ion-option>
@@ -53,18 +53,17 @@
       </ion-list>
       <ion-list>
         <ion-item>
-          <ion-label>Occupation</ion-label>
+          <ion-label style="color:black;font-weight: lighter">Occupation</ion-label>
           <ion-select [(ngModel)]="occupation">
             <ion-option value="vendor">vendor</ion-option>
             <ion-option value="begger">begger</ion-option>
-            <ion-option value="promoters">promoters</ion-option>
+            <ion-option value="promoters">promoter</ion-option>
             <ion-option value="job seeker">job seeker</ion-option>
             <ion-option value="windshield cleaner">windshield cleaner</ion-option>
             <ion-option value="other">other</ion-option>
           </ion-select>
         </ion-item>
       </ion-list>
-  
       <ion-row>
         <ion-col col-8>
   
@@ -73,15 +72,14 @@
           <button ion-button full (click) = "save();">save</button>
         </ion-col>
       </ion-row>
-    </ion-card>
-  
+    </ion-card> 
     <ion-list *ngFor = "let person of people; let i = index">
         <ion-item-sliding>
           <ion-item>
             <ion-avatar item-start>
               <img src="../../assets/imgs/logo.png">
             </ion-avatar>
-            <h2>Slimer</h2>
+            <h2>{{person.occupation}}</h2>
           </ion-item>
           <ion-item-options side="right">
             <button ion-button color="primary" (click) = "remove(i);">
