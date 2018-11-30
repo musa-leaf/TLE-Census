@@ -8,6 +8,8 @@ import "leaflet-tilelayer-mbtiles-ts";
 
 
 declare var L:any;
+declare var firebase;
+
 @IonicPage() 
 @Component({
   selector: 'page-map',
@@ -22,6 +24,7 @@ export class MapPage {
   lat:any;
   lng:any;
   city:string;
+  people = [];
   constructor(
     private nativeGeocoder: NativeGeocoder,
     public geo: Geolocation,public navCtrl: NavController,
@@ -34,58 +37,61 @@ export class MapPage {
         this.lng =pos.coords.longitude;
             
       }).catch( err => console.log(err));
+  
     }
   ionViewDidEnter(){
     this.prepareMap();
   }
   prepareMap(){
-    this.map = leaflet.map("map").fitWorld();
-    leaflet.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-          
-     maxZoom: 80
-    }).addTo(this.map);
-    this.map.locate({
-     setView:true,
-     
-    maxZoom:10
-  }).on('locationfound', (e) => {
-       console.log('Your location has been found');
-      let markerGroup =leaflet.featureGroup();
-      let marker: any = leaflet.marker([e.latitude, e.longitude]).on('click',() => {
-        // alert('Marker clicked')
-
-        let prompt = this.alertCtrl.create({
-                title: 'Add Infomation',
-               message: "",
-                inputs: [
-                  {
-                     name: 'info',
-                     placeholder: 'Info'
-                   },
-                ],
-                buttons: [
-                  {
-                    text: 'Cancel',
-                     handler: data => {
-                      console.log('Cancel clicked');
-                   }
-                   },
-                   {
-                     text: 'Save',
-                     handler: data => {
-                      
-                       this.geoCodeandAdd(data.city);
-                    }
-                   }
-                 ]
-             });
-               prompt.present();
-                
-
-      })
-      markerGroup.addLayer(marker);
-       this.map.addLayer(markerGroup);
-        })  
+    firebase.database().ref('people/').on("value",(snapshot) =>{
+      snapshot.forEach(element => { 
+      this.people.push({Occupation:element.val().Occupation,Race:element.val().Race,Age:element.val().Age,Gender:element.val().Gender});
+      console.log(this.people);
+      this.map = leaflet.map("map").fitWorld();
+      leaflet.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 80
+      }).addTo(this.map);
+      this.map.locate({
+      setView:true,
+        
+      maxZoom:10
+     }).on('locationfound', (e) => {
+          console.log('Your location has been found');
+         let markerGroup =leaflet.featureGroup();
+         let marker: any = leaflet.marker([element.val().Location.Lat, element.val().Location.Lng]).on('click',() => {
+           // alert('Marker clicked')
+           this.people.forEach(element => { 
+            marker.bindPopup("<b>Information</b> <br>"+element.Occupation+" : "+element.Race+" "+element.Age+" "+element.Gender).openPopup();
+           });
+          //  
+          //  let prompt = this.alertCtrl.create({
+          //          title: 'Person Infomation',
+          //         message: element.val().Race+" "+element.val().Age+" "+element.val().Occupation+" "+element.val().Gender,
+          //          buttons: [
+          //            {
+          //              text: 'Cancel',
+          //               handler: data => {
+          //                console.log('Cancel clicked');
+          //             }
+          //             },
+          //             {
+          //               text: 'Save',
+          //               handler: data => {
+                          
+          //              }
+          //             }
+          //           ]
+          //       });
+          //         prompt.present();
+                   
+   
+         })
+         markerGroup.addLayer(marker);
+          this.map.addLayer(markerGroup);
+           })  
+       });
+    }) 
+   console.log("------------------"+this.people)
   }
   
 

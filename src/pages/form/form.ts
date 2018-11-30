@@ -32,14 +32,14 @@ export class FormPage {
         
   }).catch( err => console.log(err));
 
-  firebase.database().ref().on("value",(snapshot) =>{
+  firebase.database().ref('people/').on("value",(snapshot) =>{
     snapshot.forEach(element => { 
      });
   }) 
 }
 
   save(){
-    firebase.database().ref().push({Gender:this.gender,Race:this.ethnic_group,Age:this.age_group,Occupation:this.occupation,Location:{lat:this.lat,lng:this.lng}})
+    firebase.database().ref('people/').push({Gender:this.gender,Race:this.ethnic_group,Age:this.age_group,Occupation:this.occupation,Location:{Lat:this.lat,Lng:this.lng},Time:this.time,Date:this.date})
     this.saveToArray();
     this.showConfirm();
   }
