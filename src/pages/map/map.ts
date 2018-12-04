@@ -51,12 +51,14 @@ export class MapPage {
     var peopleLocation = [
 
     ]
+    
+    this.map = leaflet.map("map").fitWorld();
     firebase.database().ref('people/').on("value",(snapshot) =>{
       snapshot.forEach(element => {  
       this.people.push({Occupation:element.val().Occupation,Race:element.val().Race,Age:element.val().Age,Gender:element.val().Gender,LocationX:element.val().Location.Lat,LocationY:element.val().Location.Lat}); 
-      peopleLocation.push([element.val().Location.Lat],[element.val().Location.Lng]);
-      console.log(peopleLocation[1][0]);
-      this.map = leaflet.map("map").fitWorld();
+      peopleLocation.push([element.val().Occupation,element.val().Location.Lat,element.val().Location.Lng,element.val().Race,element.val().Age,element.val().Gender]);
+ 
+      console.log(this.people);
       leaflet.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 80
       }).addTo(this.map);
@@ -67,14 +69,14 @@ export class MapPage {
      }).on('locationfound', (e) => {   
           console.log('Your location has been found');
          let markerGroup =leaflet.featureGroup();
-         for (var i = 1; i < planes.length; i++) {
-        let  marker = new L.circle([planes[i][1],planes[i][2]],{
+         for (var i = 0; i < peopleLocation.length; i++) {
+        let  marker = new L.circle([peopleLocation[i][1],peopleLocation[i][2]],{
           color: 'red',
           fillColor: '#f03',
-          fillOpacity: 0.5,
-          radius: 1500
+          fillOpacity: 0.7,
+          radius: 500
         })
-            .bindPopup("<b>Informarion</b>"+ " <br>"+planes[i][0])
+            .bindPopup("<b>Informarion</b>"+ " <br>"+peopleLocation[i][0]+"<br>"+peopleLocation[i][3]+"<br>"+peopleLocation[i][4]+" age <br>"+peopleLocation[i][5])
             .addTo(this.map); 
         }  
         
